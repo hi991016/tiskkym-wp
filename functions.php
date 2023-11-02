@@ -161,10 +161,11 @@
 
     add_action('init', function() {
         remove_post_type_support('work', 'editor');
+        remove_post_type_support('page', 'editor');
     }, 99);
 
-    add_action('init', function() {
-        if($_GET['post'] == '12' && $_GET['action'] == 'edit' || $_GET['post'] == '10' && $_GET['action'] == 'edit')
-            remove_post_type_support('page', 'editor');
-    }, 99);
+    // add_action('init', function() {
+    //     if($_GET['post'] == '12' && $_GET['action'] == 'edit' || $_GET['post'] == '10' && $_GET['action'] == 'edit')
+    //         remove_post_type_support('page', 'editor');
+    // }, 99);
 
