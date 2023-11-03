@@ -46,6 +46,7 @@
 </head>
 
 <body>
+
     <!-- @header -->
     <header class="c-header">
         <div class="c-header__wrapper">
@@ -57,10 +58,10 @@
                 </div>
                 <div class="c-header__works" data-navbar>
                     <div class="menu">
-                        <a href="<?= home_url(); ?>" data-nav-link class="active">Works</a>
-                        <a href="/" data-nav-link>Installation Views</a>
-                        <a href="/" data-nav-link>Publications</a>
-                        <a href="<?= home_url(); ?>/cv" data-nav-link>Cv</a>
+                        <a href="<?= home_url(); ?>" data-nav-link class="<?php echo is_home() || is_front_page() ? "active" : ""; ?>">Works</a>
+                        <a href="<?= home_url(); ?>/installation-views" data-nav-link class="<?php echo is_post_type_archive('installation-views') || is_singular('installation-views') ? "active" : ""; ?>">Installation Views</a>
+                        <a href="<?= home_url(); ?>/publications" data-nav-link class="<?php echo is_post_type_archive('publications') || is_singular('publications') ? "active" : ""; ?>">Publications</a>
+                        <a href="<?= home_url(); ?>/cv" data-nav-link class="<?php echo is_page("cv") ? "active" : ""; ?>">Cv</a>
                     </div>
                     <div class="c-header__bottom">
                         <div class="contact">
@@ -71,15 +72,34 @@
                     </div>
                 </div>
                 <div class="c-header__news pc-only">
-                    <a href="#">Current</a>
-                    <a href="#" target="_blank">New book ｜ Phase Trans</a>
-                    <a href="#" target="_blank">Exhibition ｜ Sense Island 2023</a>
-                    <a href="#" target="_blank">Talk ｜ Yau Studio</a>
+                    <a href="<?= home_url(); ?>">Current</a>
+
+                    <?php 
+                        $news = get_field('news_field', 10);
+                        $i = 0;
+                        if (!empty($news)) :
+                            foreach ($news as $key => $value) :
+                                $text = $value["text"];
+                                $link = $value["link"];
+                    ?>
+
+                    <a href="<?= $link; ?>" target="_blank"><?= $text; ?></a>
+
+                    <?php 
+                                $i++;
+                                if($i == 3) break;
+                            endforeach;
+                        endif;
+                    ?> 
                 </div>
 
                 <div class="c-header__right" data-layout>
-                    <p class="active" data-switch="typefirst">Grid</p>
-                    <p data-switch="typesecond">List</p>
+                    <?php if (is_front_page()) :?>
+                        <p class="active" data-switch="typefirst">Grid</p>
+                        <p data-switch="typesecond">List</p>
+                    <?php elseif (is_singular("works")) :?>
+                        <a href="<?= home_url(); ?>">Back</a>
+                    <?php endif;  ?>  
                 </div>
                 
                 <div class="c-header__icon" data-nav-toggler>

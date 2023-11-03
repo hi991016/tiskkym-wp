@@ -33,9 +33,53 @@
 
     function create_post_type() {
         register_post_type(
-            'work',
+            'works',
             array(
                 'label' => 'WORKS',
+                'labels' => array(
+                    'all_items' => 'プロジェクト一覧',
+                    'add_new' => 'プロジェクト新規追加',
+                    'add_new_item' => 'プロジェクト追加',
+                    'edit_item' => 'プロジェクト編集',
+                    'new_item' => 'プロジェクト追加',
+                    'view_item' => 'プロジェクトビュー',
+                    'search_items' => 'プロジェクト検索',
+                    'not_found' => '見つかりません',
+                    'not_found_in_trash' => 'ゴミ箱に見つかりません',
+                ),
+                'public' => true,
+                'has_archive' => true,
+                'menu_position' => 2,
+                'supports' => [ 'title', 'thumbnail', 'editor' ],
+            )
+        );	
+
+        register_post_type(
+            'installation-views',
+            array(
+                'label' => 'INSTALLATION VIEWS',
+                'labels' => array(
+                    'all_items' => 'プロジェクト一覧',
+                    'add_new' => 'プロジェクト新規追加',
+                    'add_new_item' => 'プロジェクト追加',
+                    'edit_item' => 'プロジェクト編集',
+                    'new_item' => 'プロジェクト追加',
+                    'view_item' => 'プロジェクトビュー',
+                    'search_items' => 'プロジェクト検索',
+                    'not_found' => '見つかりません',
+                    'not_found_in_trash' => 'ゴミ箱に見つかりません',
+                ),
+                'public' => true,
+                'has_archive' => true,
+                'menu_position' => 2,
+                'supports' => [ 'title', 'thumbnail', 'editor' ],
+            )
+        );	
+
+        register_post_type(
+            'publications',
+            array(
+                'label' => 'PUBLICATIONS',
                 'labels' => array(
                     'all_items' => 'プロジェクト一覧',
                     'add_new' => 'プロジェクト新規追加',
@@ -70,16 +114,16 @@
             'menu_name' => __( 'カテゴリー' ),
         );
         
-        register_taxonomy('work_categories', 'project' ,array(
-            'labels'                     => $labels,
-            'hierarchical'               => true,
-            'rewrite'                    => array('slug' => 'work_categories', 'with_front' => true),
-            'public'                     => true,
-            'show_ui'                    => true,
-            'show_admin_column'          => true,
-            'show_in_nav_menus'          => true,
-            'show_tagcloud'              => true,
-        ));
+        // register_taxonomy('work_categories', 'works' ,array(
+        //     'labels'                     => $labels,
+        //     'hierarchical'               => true,
+        //     'rewrite'                    => array('slug' => 'work_categories', 'with_front' => true),
+        //     'public'                     => true,
+        //     'show_ui'                    => true,
+        //     'show_admin_column'          => true,
+        //     'show_in_nav_menus'          => true,
+        //     'show_tagcloud'              => true,
+        // ));
     }
     
     function pagination_tdc($post_type, $wp_query, $paged, $cat = "", $filter = "") {
@@ -153,14 +197,14 @@
 
     add_action('init', 'initTheme');
     // add_theme_support( 'post-thumbnails' );
-    add_theme_support('post-thumbnails', array('post', 'work'));
+    add_theme_support('post-thumbnails', array('post', 'works'));
     add_action( 'admin_menu', 'remove_menus' );
 	add_action( 'admin_bar_menu', 'remove_admin_bar_menus', 999 );
     add_action('init', 'create_post_type');
     add_action( 'init', 'create_taxonomy', 0 );
 
     add_action('init', function() {
-        remove_post_type_support('work', 'editor');
+        remove_post_type_support('works', 'editor');
         remove_post_type_support('page', 'editor');
     }, 99);
 

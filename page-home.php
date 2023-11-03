@@ -20,72 +20,77 @@
                 </div>
 
                 <div class="top__layout">
+
+                    <?php
+                        $projects_posts1 = array(
+                            'post_type' => 'works',
+                            'posts_per_page' => -1,
+                            'order'             => 'ASC',
+                        );
+
+                        $projects_posts = new WP_Query( $projects_posts1 );
+                    ?>
+
                     <div class="top__content grid active" id="switch-typefirst" data-switch-content>
                         <div class="grid__layout u-grid">
-                            <a href="detail.html" class="grid__items">
+                            <?php
+                                if( $projects_posts->have_posts() ) :
+                                    $i =0;
+                                        while( $projects_posts->have_posts() ) :
+                                            $projects_posts->the_post();
+                                                $works = get_field('projects_field', get_the_ID());
+                                                $year = $works["year"];
+                                                $thumbnail = wp_get_attachment_url(get_post_thumbnail_id($post->ID), 'thumbnail');
+                            ?>
+
+                            <a href="<?php the_permalink(); ?>" class="grid__items">
                                 <figure>
-                                    <img src="<?= get_template_directory_uri() ?>/assets/img/home-5.jpg" alt="TRACES, 2022" loading="lazy" width="190"
+                                    <img src="<?= $thumbnail; ?>" alt="<?php the_title(); ?>" loading="lazy" width="190"
                                         height="285">
 
                                     <div class="grid__text">
-                                        <span class="title">TRACES<span class="pc-only">,</span></span>
-                                        <span class="year">2022</span>
+                                        <span class="title"><?php the_title(); ?><span class="pc-only">,</span></span>
+                                        <span class="year"><?= $year ?></span>
                                     </div>
                                 </figure>
                             </a>
-                            <a href="#" class="grid__items">
-                                <figure>
-                                    <img src="<?= get_template_directory_uri() ?>/assets/img/home-6.jpg" alt="REVIVE, 2019" loading="lazy" width="190"
-                                        height="285">
 
-                                    <div class="grid__text">
-                                        <span class="title">REVIVE<span class="pc-only">,</span></span>
-                                        <span class="year">2019</span>
-                                    </div>
-                                </figure>
-                            </a>
-                            <a href="#" class="grid__items">
-                                <figure>
-                                    <img src="<?= get_template_directory_uri() ?>/assets/img/home-7.jpg" alt="POLYSEMIC FUNDUS, 2023" loading="lazy"
-                                        width="190" height="285">
-                                </figure>
-                                <div class="grid__text">
-                                    <span class="title">PHOTONS<span class="pc-only">,</span></span>
-                                    <span class="year">2015</span>
-                                </div>
-                            </a>
-                            <a href="#" class="grid__items">
-                                <figure>
-                                    <img src="<?= get_template_directory_uri() ?>/assets/img/home-8.jpg" alt="CIRCULATION, 2013" loading="lazy" width="190"
-                                        height="285">
-
-                                    <div class="grid__text">
-                                        <span class="title">CIRCULATION<span class="pc-only">,</span></span>
-                                        <span class="year">2013</span>
-                                    </div>
-                                </figure>
-                            </a>
+                            <?php
+                                            $i++;
+                                        endwhile;
+                                    else: echo 'No projects found';
+                                endif; wp_reset_postdata();
+                            ?>
                         </div>
                     </div>
 
                     <div class="top__content list" id="switch-typesecond" data-switch-content>
                         <div class="list__layout">
+
+                            <?php
+                                if( $projects_posts->have_posts() ) :
+                                    $i =0;
+                                        while( $projects_posts->have_posts() ) :
+                                            $projects_posts->the_post();
+                                                $works = get_field('projects_field', get_the_ID());
+                                                $year = $works["year"];
+                            ?>
+
                             <div class="list__items u-grid">
                                 <span></span>
-                                <a class="list__link" href="#">
-                                    <h2 class="title">POLYSEMIC FUNDUS</h2>
-                                    <p class="year">2023</p>
+                                <a class="list__link" href="<?php the_permalink(); ?>">
+                                    <h2 class="title"><?php the_title(); ?></h2>
+                                    <p class="year"><?= $year ?></p>
                                     <span class="arrow">→</span>
                                 </a>
                             </div>
-                            <div class="list__items u-grid">
-                                <span></span>
-                                <a class="list__link" href="#">
-                                    <h2 class="title">REVIVE</h2>
-                                    <p class="year">2019</p>
-                                    <span class="arrow">→</span>
-                                </a>
-                            </div>
+
+                            <?php
+                                            $i++;
+                                        endwhile;
+                                    else: echo 'No projects found';
+                                endif; wp_reset_postdata();
+                            ?>
                         </div>
                     </div>
                 </div>
